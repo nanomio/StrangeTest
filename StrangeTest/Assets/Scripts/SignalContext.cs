@@ -23,6 +23,11 @@ public class SignalContext : MVCSContext
         base.Launch();
 
         var startSignal = injectionBinder.GetInstance<AppStartSignal>();
+
+        startSignal.AddListener(() => Debug.Log("Added listener!"));
+        startSignal.AddOnce(() => Debug.Log("Added once!"));
+
+        startSignal.Dispatch();
         startSignal.Dispatch();
     }
 
