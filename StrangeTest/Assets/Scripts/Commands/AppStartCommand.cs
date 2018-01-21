@@ -7,11 +7,19 @@ public class AppStartCommand : Command
     [Inject]
     public IExecuter Executer { get; private set; }
 
+    [Inject]
+    public ChanheCoinsBalanceSignal ChanheCoinsBalanceSignal { get; private set; }
+
+    [Inject]
+    public CoinsBalanceChangedSignal CoinsBalanceChangedSignal { get; private set; }
+
     public override void Execute()
     {
         Retain();                   // This method shows that execution will take some time, important for commandBinder.Bind<>().InSequence()...
 
         Debug.Log("Fuck Yeee!");
+
+        CoinsBalanceChangedSignal.AddListener(OnBalanceChange);
 
         Executer.Execute(WaitAndGo());
     }
@@ -22,8 +30,16 @@ public class AppStartCommand : Command
 
         Debug.Log("Ok, go next!");
 
-        Release();                  // Need to use it after "Retain" method
+        ChanheCoinsBalanceSignal.Dispatch(+10);
+        ChanheCoinsBalanceSignal.Dispatch(-50);
+
+        Release();                  // Used it after "Retain" method
 
 //      Fail();                     //<-- After this method no commands will execute!
+    }
+
+    public void OnBalanceChange(int balance)
+    {
+        Debug.Log("Current balance: " + balance);
     }
 }
