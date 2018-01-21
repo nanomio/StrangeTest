@@ -13,6 +13,8 @@ public class MainContext : SignalContext
     {
         base.mapBindings();
 
+        injectionBinder.Bind<IExecuter>().To<CoroutineExecuter>().ToSingleton();
+
         commandBinder.Bind<AppStartSignal>().InSequence().To<ShowLoadingCommand>().To<AppStartCommand>().To<HideLoadingCommand>().Once();
     }
 }

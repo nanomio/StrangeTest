@@ -24,11 +24,11 @@ public class SignalContext : MVCSContext
 
         var startSignal = injectionBinder.GetInstance<AppStartSignal>();
 
-        startSignal.AddListener(() => Debug.Log("Added listener!"));
-        startSignal.AddOnce(() => Debug.Log("Added once!"));
+        //startSignal.AddListener(() => Debug.Log("Added listener!"));
+        //startSignal.AddOnce(() => Debug.Log("Added once!"));
 
         startSignal.Dispatch();
-        startSignal.Dispatch();
+//      startSignal.Dispatch();
     }
 
     protected override void mapBindings()
