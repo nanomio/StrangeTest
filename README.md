@@ -1,2 +1,2 @@
 # StrangeTest
-Testing StrangeIOC
+Testing StrangeIoC
