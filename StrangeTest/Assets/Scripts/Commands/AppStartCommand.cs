@@ -8,10 +8,13 @@ public class AppStartCommand : Command
     public IExecuter Executer { get; private set; }
 
     [Inject]
-    public ChanheCoinsBalanceSignal ChanheCoinsBalanceSignal { get; private set; }
+    public ChanheCoinsBalanceSignal changeCoinsBalanceSignal { get; private set; }
 
     [Inject]
-    public CoinsBalanceChangedSignal CoinsBalanceChangedSignal { get; private set; }
+    public CoinsBalanceChangedSignal coinsBalanceChangedSignal { get; private set; }
+
+    [Inject]
+    public SocialLoginSignal socialLoginSignal { get; private set; }
 
     public override void Execute()
     {
@@ -19,7 +22,7 @@ public class AppStartCommand : Command
 
         Debug.Log("Fuck Yeee!");
 
-        CoinsBalanceChangedSignal.AddListener(OnBalanceChange);
+        coinsBalanceChangedSignal.AddListener(OnBalanceChange);
 
         Executer.Execute(WaitAndGo());
     }
@@ -30,8 +33,11 @@ public class AppStartCommand : Command
 
         Debug.Log("Ok, go next!");
 
-        ChanheCoinsBalanceSignal.Dispatch(+10);
-        ChanheCoinsBalanceSignal.Dispatch(-50);
+        changeCoinsBalanceSignal.Dispatch(+10);
+        changeCoinsBalanceSignal.Dispatch(-50);
+
+        socialLoginSignal.Dispatch(SNType.TW);
+        socialLoginSignal.Dispatch(SNType.VK);
 
         Release();                  // Used it after "Retain" method
 

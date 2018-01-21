@@ -15,9 +15,12 @@ public class MainContext : SignalContext
 
         injectionBinder.Bind<MainModel>().ToSingleton();
         injectionBinder.Bind<IExecuter>().To<CoroutineExecuter>().ToSingleton();
+        injectionBinder.Bind<ISocialNetwork>().To<TwitterSocial>().ToName(SNType.TW);
+        injectionBinder.Bind<ISocialNetwork>().To<VkSocial>().ToName(SNType.VK).ToSingleton();
 
         commandBinder.Bind<AppStartSignal>().InSequence().To<ShowLoadingCommand>().To<AppStartCommand>().To<HideLoadingCommand>().Once();
         commandBinder.Bind<ChanheCoinsBalanceSignal>().To<ChangeCoinsBalanceCommand>();
         commandBinder.Bind<CoinsBalanceChangedSignal>();
+        commandBinder.Bind<SocialLoginSignal>().To<SocialLoginCommand>();
     }
 }
